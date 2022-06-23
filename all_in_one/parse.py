@@ -8,7 +8,8 @@ import requests
 from bs4 import BeautifulSoup
 
 
-HOME_URL = "https://webscraper.io/test-sites/e-commerce/allinone/"
+BASE_URL = "https://webscraper.io/"
+HOME_URL = urljoin(BASE_URL, "test-sites/e-commerce/static/")
 DATA_PATH = "all_in_one/products/"
 
 

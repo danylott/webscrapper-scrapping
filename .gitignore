@@ -2,4 +2,5 @@ venv
 .pyc
 .idea
 .DStore
+**.log
 **.csv
