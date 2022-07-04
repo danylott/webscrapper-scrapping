@@ -4,3 +4,6 @@ venv
 .DStore
 **.log
 **.csv
+**__pycache__
+.python-version
+venv310
