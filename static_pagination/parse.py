@@ -31,6 +31,7 @@ logging.basicConfig(
     ],
 )
 
+
 @dataclass
 class Product:
     title: str
@@ -49,7 +50,9 @@ def parse_single_product(product_soup: BeautifulSoup) -> Product:
         description=product_soup.select_one(".description").text,
         price=float(product_soup.select_one(".price").text.replace("$", "")),
         rating=int(product_soup.select_one("p[data-rating]")["data-rating"]),
-        num_of_reviews=int(product_soup.select_one(".ratings > p.pull-right").text.split()[0]),
+        num_of_reviews=int(
+            product_soup.select_one(".ratings > p.pull-right").text.split()[0]
+        ),
     )
 
 
@@ -85,7 +88,13 @@ def get_category_products(url: str) -> List[Product]:
 
 
 def write_products_to_csv(page: str, products: List[Product]):
-    with open(os.path.join(DATA_PATH, f"{page}.csv",), "w") as f:
+    with open(
+        os.path.join(
+            DATA_PATH,
+            f"{page}.csv",
+        ),
+        "w",
+    ) as f:
         writer = csv.writer(f)
         writer.writerow(PRODUCT_FIELDS)
         writer.writerows([astuple(product) for product in products])
@@ -105,5 +114,5 @@ def main():
     get_all_products()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

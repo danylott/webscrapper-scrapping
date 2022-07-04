@@ -32,7 +32,9 @@ class ProductsSpider(scrapy.Spider):
                 "num_of_reviews": int(
                     product.css(".ratings > p.pull-right::text").get().split()[0]
                 ),
-                "additional_info": {"hdd_prices":self._parse_hdd_block_prices(response, product)}
+                "additional_info": {
+                    "hdd_prices": self._parse_hdd_block_prices(response, product)
+                },
             }
 
         next_page = response.css(".pagination > li")[-1].css("a::attr(href)")
@@ -45,7 +47,9 @@ class ProductsSpider(scrapy.Spider):
         #     # same, but shorter
         #     yield response.follow(next_page, callback=self.parse)
 
-    def _parse_hdd_block_prices(self, response: Response, product: Selector) -> Dict[str, float]:
+    def _parse_hdd_block_prices(
+        self, response: Response, product: Selector
+    ) -> Dict[str, float]:
         prices = {}
         detailed_url = response.urljoin(product.css(".title::attr(href)").get())
 
@@ -57,7 +61,9 @@ class ProductsSpider(scrapy.Spider):
             if not button.get_property("disabled"):
                 button.click()
                 prices[button.get_property("value")] = float(
-                    self.driver.find_element(By.CLASS_NAME, "price").text.replace("$", "")
+                    self.driver.find_element(By.CLASS_NAME, "price").text.replace(
+                        "$", ""
+                    )
                 )
 
         return prices

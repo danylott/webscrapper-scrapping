@@ -89,7 +89,7 @@ def parse_single_product(product_soup: BeautifulSoup) -> Product:
         num_of_reviews=int(
             product_soup.select_one(".ratings > p.pull-right").text.split()[0]
         ),
-        additional_info={"hdd_prices": hdd_prices}
+        additional_info={"hdd_prices": hdd_prices},
     )
 
 
